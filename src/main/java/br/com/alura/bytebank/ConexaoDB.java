@@ -10,7 +10,7 @@ public class ConexaoDB {
 
         try {
             Connection connection = DriverManager
-                    .getConnection("jdbc:mysql://localhost:3306/byte_bank?user_root&password=998358");
+                    .getConnection("jdbc:mysql://localhost:3306/byte_bank?user=root&password=root");
 
             System.out.println("Recuperei a conexão ");
             connection.close();
