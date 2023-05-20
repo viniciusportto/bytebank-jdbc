@@ -7,6 +7,7 @@ import br.com.alura.bytebank.domain.cliente.Cliente;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -40,14 +41,18 @@ public class ContaService {
 
         Connection conn = connection.recuperarConexao();
 
-        var preparedStatement = conn.prepareStatement(sql);
+        try{
+            var preparedStatement = conn.prepareStatement(sql);
 
-        preparedStatement.setInt(1, conta.getNumero());
-        preparedStatement.setBigDecimal(2, BigDecimal.ZERO);
-        preparedStatement.setString(3, dadosDaConta.dadosCliente().nome());
-        preparedStatement.setString(4, dadosDaConta.dadosCliente().cpf());
-        preparedStatement.setString(5, dadosDaConta.dadosCliente().email());
+            preparedStatement.setInt(1, conta.getNumero());
+            preparedStatement.setBigDecimal(2, BigDecimal.ZERO);
+            preparedStatement.setString(3, dadosDaConta.dadosCliente().nome());
+            preparedStatement.setString(4, dadosDaConta.dadosCliente().cpf());
+            preparedStatement.setString(5, dadosDaConta.dadosCliente().email());
 
+        }catch (SQLException e){
+            throw new RuntimeException();
+        }
     }
 
     public void realizarSaque(Integer numeroDaConta, BigDecimal valor) {
