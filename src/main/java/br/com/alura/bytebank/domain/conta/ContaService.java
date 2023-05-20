@@ -15,7 +15,7 @@ public class ContaService {
 
     private ConnectionFactory connection;
 
-    ContaService(){
+    public ContaService(){
         this.connection = new ConnectionFactory();
     }
 
@@ -42,13 +42,15 @@ public class ContaService {
         Connection conn = connection.recuperarConexao();
 
         try{
-            var preparedStatement = conn.prepareStatement(sql);
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
 
             preparedStatement.setInt(1, conta.getNumero());
             preparedStatement.setBigDecimal(2, BigDecimal.ZERO);
-            preparedStatement.setString(3, dadosDaConta.dadosCliente().nome());
-            preparedStatement.setString(4, dadosDaConta.dadosCliente().cpf());
-            preparedStatement.setString(5, dadosDaConta.dadosCliente().email());
+            preparedStatement.setString(3,dadosDaConta.dadosCliente().nome());
+            preparedStatement.setString(4,dadosDaConta.dadosCliente().cpf());
+            preparedStatement.setString(5,dadosDaConta.dadosCliente().email());
+
+            preparedStatement.execute();
 
         }catch (SQLException e){
             throw new RuntimeException();
