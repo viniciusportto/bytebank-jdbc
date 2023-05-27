@@ -77,24 +77,6 @@ public class ContaDAO {
         return contas;
     }
 
-    public void alterar(Integer numero, BigDecimal valor) {
-        PreparedStatement ps;
-        String sql = "UPDATE conta SET saldo = ? WHERE numero = ?";
-
-        try {
-            ps = conn.prepareStatement(sql);
-
-            ps.setBigDecimal(1, valor);
-            ps.setInt(2, numero);
-
-            ps.execute();
-            ps.close();
-            conn.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     public Conta listarPorNumero(Integer numero) {
         String sql = "SELECT * FROM conta WHERE numero = ?";
 
@@ -126,5 +108,37 @@ public class ContaDAO {
             throw new RuntimeException(e);
         }
         return conta;
+    }
+
+    public void alterar(Integer numero, BigDecimal valor) {
+        PreparedStatement ps;
+        String sql = "UPDATE conta SET saldo = ? WHERE numero = ?";
+
+        try {
+            ps = conn.prepareStatement(sql);
+
+            ps.setBigDecimal(1, valor);
+            ps.setInt(2, numero);
+
+            ps.execute();
+            ps.close();
+            conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void deletar(Integer numeroDaConta) {
+        String sql = "DELETE FROM conta WHERE numero = ?";
+
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, numeroDaConta);
+            ps.execute();
+            ps.close();
+            conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
